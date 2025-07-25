@@ -39,3 +39,45 @@ body, html {
   object-fit: contain; /* Keeps the image aspect ratio */
   margin-right: 16px;  /* Space between logo and title */
 }
+
+.Heading1{
+font-size: 3rem;      /* Set the size */
+  color: #c5c5c5;       /* Set your desired color */
+  padding: 24px;
+  margin: 24px auto;
+}
+
+.Heading2{
+font-size: 1rem;      /* Set the size */
+  color: #afafaf;       /* Set your desired color */
+  padding: 24px;
+  margin: 24px auto;
+}
+
+.Button {
+  background-color: #4a90e2;   /* Button background color */
+  color: white;                /* Button text color */
+  font-size: 1.1rem;           /* Button text size */
+  padding: 12px 28px;          /* Top/bottom and left/right padding */
+  border: none;                /* Remove default border */
+  border-radius: 6px;          /* Rounded corners */
+  cursor:pointer ;             /* Cursor changes to pointer on hover */
+  margin: 12px 0;              /* Space above and below the button */
+  transition: background 0.2s; /* Smooth background color transition on hover */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Subtle shadow for depth */
+}
+
+.Button:hover {
+  background-color: #357ab8;   /* Darker background on hover */
+}
+
+.Result{
+    font-size: 1.2rem;        /* Set the text size */
+  color: #e0e0e0;           /* Set the text color */
+  line-height: 1.6;         /* Increase space between lines */
+  margin: 5px 0;           /* Space above and below the paragraph */
+  padding: 10px 5px;       /* Padding inside the paragraph */
+  /*background-color: #222;   /* Background color for contrast */
+  border-radius: 6px;       /* Rounded corners */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08); /* Subtle shadow */
+}
