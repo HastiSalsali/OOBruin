@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 import './App.css';
 import { Header } from "./header";
 import { Measure } from "./Measure";
+import { Camera } from "./Camera";
 
 const socket = io('http://localhost:8000');
 
@@ -24,6 +25,7 @@ function App() {
     <div className="app">
       <Header />
       <Measure />
+      <Camera />
     </div>
   );
 }
