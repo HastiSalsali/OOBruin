@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import io from 'socket.io-client';
 import './App.css';
+import { Header } from "./header";
 
 const socket = io('http://localhost:8000');
 
@@ -20,7 +21,8 @@ function App() {
 
   return (
     <div className="app">
-      <p>Write your code here!</p>
+      <Header />
+      <p>Write your code!</p>
     </div>
   );
 }
