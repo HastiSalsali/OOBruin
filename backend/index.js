@@ -100,13 +100,19 @@ let latestHumidity = null;
 let latestLight = null;
 
 io.on("connection", (socket) => {
+  socket.on("op-msg-to-agnt", (message) => { 
+    console.log('Message Received from Operator:', message);
+    client.publish("op-msg-to-agnt", message.toString());
+  });
   console.log("Frontend connected to socket");
 
   // Send the latest sensor data to the newly connected client
   if (latestTemp) {
     socket.emit('temp', latestTemp);
   }
-  if (latestUltrasonic) socket.emit('ultrasonic', latestUltrasonic);
+  if (latestUltrasonic) {
+    socket.emit('ultrasonic', latestUltrasonic);
+  } 
   if (latestLight) {
     socket.emit('light', latestLight);
   }
