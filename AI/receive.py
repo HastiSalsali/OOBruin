@@ -5,14 +5,14 @@ from pathlib import Path
 import requests
 import os
 import sys
-from secrets import API_KEY
+from my_secrets import API_KEY
 
 # Get the folder where the script is located, done for you
 script_dir = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(script_dir, "../frontend/public/downloaded_image.jpg")
 
-url = "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194139/image-url.jpg"             # You will have to change the IP Address
-
+#url = "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194139/image-url.jpg"             # You will have to change the IP Address
+url = "https://www.movies4kids.co.uk/wp-content/uploads/sites/15/2019/04/spycat.jpg"
 # Function to download the image from esp32, given to you
 def download_image():
     response = requests.get(url)

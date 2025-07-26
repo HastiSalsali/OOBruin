@@ -9,7 +9,7 @@ function App() {
   const [pictureStatus, setPictureStatus] = useState("");
   const [pictureAvail, setPictureAvail] = useState(false)
   const [cameraKey, setCameraKey] = useState(0);
-
+  const [inputText, setInputText] = useState("");
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected:', socket.id));
@@ -25,11 +25,6 @@ function App() {
       socket.off('picture_taken');
     };
   }, []);
-
-
-
-
-
 
   //measurements:
   const [tempRes, settempRes] = useState("No measurements done yet!");
@@ -55,7 +50,6 @@ function App() {
   })
 
   //Take photo
-
   function Camera(prop) {
     let handleClick = () => {
       socket.emit('take_picture')
@@ -64,36 +58,64 @@ function App() {
     }
 
     return (
-      <div style={{ padding: "24px", borderRadius: "8px", maxWidth: "400px", margin: "24px auto" }}>
+      <div className="camera-section">
         <h2 className="Heading1">Camera:</h2>
         <button onClick={handleClick} className="Button">Take photo</button >
-        <div style={{ marginTop: "16px" }}>
-          <img src={`/downloaded_image.jpg?${Date.now()}`} alt="No photo to display" style={{ width: "100%", borderRadius: "8px" }} /> 
-          <audio controls style={{ width: "100%", marginTop: "16px" }}>
-  <source src="/image_to_speach.mp3" type="audio/mpeg" />
-  Your browser does not support the audio element.
-</audio>
+        <div className="media-container">
+          <img src={`/downloaded_image.jpg?${Date.now()}`} alt="No photo to display" className="camera-image" /> 
+          <audio controls className="audio-player">
+            <source src="/image_to_speach.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
         </div>
       </div>
     );
   }
 
+  const handleSendText = () => {
+    if (inputText.trim()) {
+      // You can emit this to your socket or handle it as needed
+      console.log('Sending text:', inputText);
+      // socket.emit('send_text', inputText); // Uncomment if you want to send to backend
+      setInputText(""); // Clear input after sending
+    }
+  }
 
-  ////////
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendText();
+    }
+  }
+
   return (
     <div className="app">
       <Header />
-      <div style={{ padding: "24px", borderRadius: "8px", maxWidth: "400px", margin: "24px auto" }}>
-        <h2 className="Heading1">Measurements:</h2>
-        <p className="Result"> Temp value: {tempRes ? tempRes : "No measurements done yet!"} </p>
-        <p className="Result"> Humidity value: {humidRes ? humidRes : "No measurements done yet!"} </p>
-        <p className="Result"> Light value: {lightRes ? lightRes : "No measurements done yet!"} </p>
-        <p className="Result"> Distance value: {distRes ? distRes : "No measurements done yet!"} </p>
+      <div className="main-container">
+        <div className="measurements-section">
+          <h2 className="Heading1">Measurements:</h2>
+          <p className="Result"> Temp value: {tempRes ? tempRes : "No measurements done yet!"} </p>
+          <p className="Result"> Humidity value: {humidRes ? humidRes : "No measurements done yet!"} </p>
+          <p className="Result"> Light value: {lightRes ? lightRes : "No measurements done yet!"} </p>
+          <p className="Result"> Distance value: {distRes ? distRes : "No measurements done yet!"} </p>
+        </div>
+        <Camera pictureAvail={pictureAvail} onCameraClick={() => setCameraKey(prev => prev + 1)}
+          key={cameraKey} />
       </div>
-      <Camera pictureAvail={pictureAvail} onCameraClick={() => setCameraKey(prev => prev + 1)}
-        key={cameraKey} />
+      <div className="talk-to-agent-section">
+        <h2 className="Heading1">Talk to agent</h2>
+        <div className="text-input-container">
+          <input 
+            type="text" 
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Enter your message..."
+            className="text-input"
+          />
+          <button onClick={handleSendText} className="Button send-button">Send</button>
+        </div>
+      </div>
     </div>
-
   );
 }
 
