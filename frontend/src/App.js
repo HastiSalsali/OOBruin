@@ -8,12 +8,15 @@ const socket = io('http://localhost:8000');
 function App() {
   const [pictureStatus, setPictureStatus] = useState("");
   const [pictureAvail, setPictureAvail] = useState(false)
+  const [cameraKey, setCameraKey] = useState(0);
 
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected:', socket.id));
     socket.on('picture_taken', data => {
       setPictureStatus(data.message);
+      setPictureAvail(data.success)
+      console.log('GOT PHOTO')
 
       setTimeout(() => setPictureStatus(""), 3000); // Clear status after 3 seconds
     });
@@ -24,9 +27,9 @@ function App() {
   }, []);
 
 
-  
 
-   
+
+
 
   //measurements:
   const [tempRes, settempRes] = useState("No measurements done yet!");
@@ -56,19 +59,21 @@ function App() {
   function Camera(prop) {
     let handleClick = () => {
       socket.emit('take_picture')
-          console.log('taking photo')
-
+      console.log('taking photo')
+      prop.onCameraClick()
     }
+
     return (
       <div style={{ padding: "24px", borderRadius: "8px", maxWidth: "400px", margin: "24px auto" }}>
         <h2 className="Heading1">Camera:</h2>
         <button onClick={handleClick} className="Button">Take photo</button >
-        {prop.pictureAvail ? (
-          <div style={{ marginTop: "16px" }}>
-            <img src="/downloaded_image.jpg" alt="Taken" style={{ width: "100%", borderRadius: "8px" }} />
-          </div>
-        ) :
-          (<div className="Result">No image captured yet</div>)}
+        <div style={{ marginTop: "16px" }}>
+          <img src={`/downloaded_image.jpg?${Date.now()}`} alt="No photo to display" style={{ width: "100%", borderRadius: "8px" }} /> 
+          <audio controls style={{ width: "100%", marginTop: "16px" }}>
+  <source src="/image_to_speach.mp3" type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
+        </div>
       </div>
     );
   }
@@ -85,7 +90,8 @@ function App() {
         <p className="Result"> Light value: {lightRes ? lightRes : "No measurements done yet!"} </p>
         <p className="Result"> Distance value: {distRes ? distRes : "No measurements done yet!"} </p>
       </div>
-      <Camera pictureAvail = {pictureAvail}/>
+      <Camera pictureAvail={pictureAvail} onCameraClick={() => setCameraKey(prev => prev + 1)}
+        key={cameraKey} />
     </div>
 
   );
