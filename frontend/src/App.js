@@ -9,7 +9,7 @@ function App() {
   const [pictureStatus, setPictureStatus] = useState("");
   const [pictureAvail, setPictureAvail] = useState(false)
   const [cameraKey, setCameraKey] = useState(0);
-  const [inputText, setInputText] = useState("");
+  
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected:', socket.id));
@@ -62,7 +62,7 @@ function App() {
         <h2 className="Heading1">Camera:</h2>
         <button onClick={handleClick} className="Button">Take photo</button >
         <div className="media-container">
-          <img src={`/downloaded_image.jpg?${Date.now()}`} alt="No photo to display" className="camera-image" /> 
+          <img src={`/downloaded_image.jpg?${Date.now()}`} alt="No photo to display" className="camera-image" />
           <audio controls className="audio-player">
             <source src="/image_to_speach.mp3" type="audio/mpeg" />
             Your browser does not support the audio element.
@@ -72,20 +72,20 @@ function App() {
     );
   }
 
-  const handleSendText = () => {
-    if (inputText.trim()) {
-      // You can emit this to your socket or handle it as needed
-      console.log('Sending text:', inputText);
-      // socket.emit('send_text', inputText); // Uncomment if you want to send to backend
-      setInputText(""); // Clear input after sending
-    }
-  }
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSendText();
-    }
-  }
+//Text send---------------------
+  const [response, setResponse] = useState(null);
+  const [text, setText] = useState(null);
+
+  const handleChange = e => setText(e.target.value);
+  const handleSubmit = e => {
+    console.log("Frontend sending message: " + text);
+    e.preventDefault(); // prevent page from refreshing
+    //React -> Node
+    socket.emit('op-msg-to-agnt', text);
+    setText("");
+  };
+
 
   return (
     <div className="app">
@@ -104,19 +104,24 @@ function App() {
       <div className="talk-to-agent-section">
         <h2 className="Heading1">Talk to agent</h2>
         <div className="text-input-container">
-          <input 
-            type="text" 
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            onKeyPress={handleKeyPress}
+          <input
+            type="text"
             placeholder="Enter your message..."
-            className="text-input"
+            value={text}
+            onChange={handleChange}
+           className="text-input"
+
+            required
           />
-          <button onClick={handleSendText} className="Button send-button">Send</button>
+          <button onClick={handleSubmit} className="Button send-button">Send</button>
         </div>
       </div>
     </div>
   );
 }
 
+//
 export default App;
+
+
+
