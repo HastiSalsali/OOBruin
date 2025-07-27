@@ -9,7 +9,8 @@ function App() {
   const [pictureStatus, setPictureStatus] = useState("");
   const [pictureAvail, setPictureAvail] = useState(false)
   const [cameraKey, setCameraKey] = useState(0);
-  
+  const [updatePic, setUpdatePic] = useState(0)
+
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected:', socket.id));
@@ -17,10 +18,11 @@ function App() {
       setPictureStatus(data.message);
       setPictureAvail(data.success)
       console.log('GOT PHOTO')
+      setUpdatePic(updatePic + 1)
 
       setTimeout(() => setPictureStatus(""), 3000); // Clear status after 3 seconds
     });
-    console.log('STARTED PROGRAM')
+    console.log('STARTED PROGRAM at' , Date.now() )
     return () => {
       socket.off('picture_taken');
     };
@@ -56,15 +58,14 @@ function App() {
       console.log('taking photo')
       prop.onCameraClick()
     }
-
     return (
       <div className="camera-section">
         <h2 className="Heading1">Camera:</h2>
         <button onClick={handleClick} className="Button">Take photo</button >
         <div className="media-container">
-          <img src={`/downloaded_image.jpg?${Date.now()}`} alt="No photo to display" className="camera-image" />
+          <img src={`/downloaded_image.jpg?${Math.floor(Date.now() / 500) }`} alt="No photo to display" className="camera-image" />
           <audio controls className="audio-player">
-            <source src="/image_to_speach.mp3" type="audio/mpeg" />
+            <source src={`/image_to_speach.mp3?${Math.floor(Date.now() / 500) }`} type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
         </div>
@@ -73,7 +74,7 @@ function App() {
   }
 
 
-//Text send---------------------
+  //Text send---------------------
   const [response, setResponse] = useState(null);
   const [text, setText] = useState(null);
 
@@ -109,7 +110,7 @@ function App() {
             placeholder="Enter your message..."
             value={text}
             onChange={handleChange}
-           className="text-input"
+            className="text-input"
 
             required
           />
