@@ -11,9 +11,9 @@ from my_secrets import API_KEY
 script_dir = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(script_dir, "../frontend/public/downloaded_image.jpg")
 
-#url = "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194139/image-url.jpg" 
-url = "https://www.movies4kids.co.uk/wp-content/uploads/sites/15/2019/04/spycat.jpg"
-#url = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+#url = "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194139/image-url.jpg" #(2)
+url = "https://www.movies4kids.co.uk/wp-content/uploads/sites/15/2019/04/spycat.jpg" #(2)
+#url = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg" #(2)
 #url = "http://192.168.50.72/1600x1200.jpg" #(1)
 
 # Function to download the image from esp32, given to you
@@ -86,11 +86,12 @@ print(response.output_text)
 
 
 speech_file_path = os.path.join(script_dir, "../frontend/public/image_to_speach.mp3") 
+instruction = """Accent/Affect: heavy posh british accent; """
 
 with client.audio.speech.with_streaming_response.create(
     model="gpt-4o-mini-tts",
     voice="ash",
     input= response.output_text,
-    instructions="Speak like a spy like james bond. have a british accent",
+    instructions= instruction
 ) as response:
     response.stream_to_file(speech_file_path)

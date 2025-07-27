@@ -83,7 +83,7 @@ function App() {
     console.log("Frontend sending message: " + text);
     e.preventDefault(); // prevent page from refreshing
     //React -> Node
-    socket.emit('op-msg-to-agnt', text);
+    socket.emit('display', text);
     setText("");
   };
 
