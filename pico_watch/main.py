@@ -51,20 +51,24 @@ def main():
     show_clock = False
     last_msg_from_op = ""
 
-    def sub_cb(topic, msg):
-        nonlocal last_msg_from_op
-        if topic.decode() == "op-msg-to-agnt":
+    def cb(topic, msg):
+        nonlocal show_clock, last_msg_from_op
+        if topic == b"display":
             last_msg_from_op = msg.decode()
             print("Received from operator:", last_msg_from_op)
-            oled.fill(0)
-            oled.text("OP Msg:", 0, 0)
-            oled.text(last_msg_from_op[:16], 0, 20)
-            oled.show()
-            time.sleep(10)  #briefly show the message
+            
+            #oled.text("Msg:", 0, 45)
+            #oled.text(last_msg_from_op[:16], 0, 60)
+            #oled.show()
+            #time.sleep(10)  #briefly show the message
+            return last_msg_from_op
+            
+        elif topic == b"clock-setting":
+            show_clock = (msg_str.lower() == "true")
 
     try:
         #Connect to Wi-Fi
-        connect_internet("Alex's iPhone 13", password="rn6er2wm8w7k")
+        connect_internet("bruins", password="connect12")
 
         try:
             ntptime.host = "time.google.com"
@@ -78,15 +82,16 @@ def main():
             "e81fdd7ce1df460f84c57b5304b4903b.s1.eu.hivemq.cloud",
             "alexL", "OOBruin456"
         )
-        client.set_callback(sub_cb)
-        client.subscribe("op-msg-to-agnt")
-        print("Connected to MQTT broker and subscribed to op-msg-to-agnt")
+        client.set_callback(cb)
+        client.subscribe("display")
+        client.subscribe("clock-setting")
+        print("subscribed to display & clock-setting")
 
         while True:
             oled.fill(0)
 
             if show_clock:
-                oled.text("Time (PST/PDT):", 0, 10)
+                oled.text("Time (PST):", 0, 10)
                 oled.text(format_time(), 0, 30)
                 oled.show()
                 time.sleep(1)
@@ -100,11 +105,13 @@ def main():
                     lumens = read_light_lumens()
 
                     oled.text("Temp: {:.1f} F".format(temp_f), 0, 0)
-                    oled.text("Humidity: {}%".format(hum), 0, 15)
-                    oled.text("Light: {}".format(lumens), 0, 30)
+                    oled.text("Humidity: {}%".format(hum), 0, 13)
+                    oled.text("Light: {}".format(lumens), 0, 26)
 
                     if last_msg_from_op:
-                        oled.text(last_msg_from_op[:16], 0, 45)
+                        oled.text(last_msg_from_op[:16], 0, 40)
+                        oled.text(last_msg_from_op[16:32], 0, 53)
+
 
                     oled.show()
 
