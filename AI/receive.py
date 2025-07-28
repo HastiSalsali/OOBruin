@@ -11,9 +11,6 @@ from my_secrets import API_KEY
 script_dir = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(script_dir, "../frontend/public/downloaded_image.jpg")
 
-#url = "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194139/image-url.jpg" #(2)
-#url = "https://www.movies4kids.co.uk/wp-content/uploads/sites/15/2019/04/spycat.jpg" #(2)
-#url = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg" #(2)
 #url = "http://192.168.0.113/1600x1200.jpg" #on bruin wifi
 #url = "http://192.168.50.96/1600x1200.jpg"
 url = "http://192.168.0.110/1600x1200.jpg"
@@ -29,11 +26,9 @@ def download_image():
     else:
         print("Failed to download image. Status code:", response.status_code)
 
-# TODO: Download the image and get a response from openai
-
-# TODO: How to control when to take photo?
 
 download_image()
+
 client = OpenAI(api_key = API_KEY)
 
 
@@ -50,7 +45,7 @@ def create_file(file_path):
 file_id = create_file("../frontend/public/downloaded_image.jpg")
 
 
-#AI PHOTO ANALYSIS FOR FILE IN FRONTEND (1):
+#AI PHOTO ANALYSIS FOR FILE IN FRONTEND:
 response = client.responses.create(
     model="gpt-4.1-mini",
     input=[{
@@ -64,29 +59,11 @@ response = client.responses.create(
         ],
     }],
 )
-#___________________________________(1)
-
-
-#AI PHOTO ANALYSIS FOR PHOTO IN WEB (2):
-# response = client.responses.create(
-#     model="gpt-4.1-mini",
-#     input=[{
-#         "role": "user",
-#         "content": [
-#             {"type": "input_text", "text": "what's in this image?"},
-#             {
-#                 "type": "input_image",
-#                 "image_url": url,
-#             },
-#         ],
-#     }],
-# )
-#___________________________________(2)
-
 
 print(response.output_text)
 
 
+#AI TEXT TO SPEECH:
 speech_file_path = os.path.join(script_dir, "../frontend/public/image_to_speach.mp3") 
 instruction = """Accent/Affect: heavy posh british accent; """
 

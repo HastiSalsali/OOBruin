@@ -7,18 +7,12 @@ const socket = io('http://localhost:8000');
 
 function App() {
   const [pictureStatus, setPictureStatus] = useState("");
-  const [pictureAvail, setPictureAvail] = useState(false)
-  const [cameraKey, setCameraKey] = useState(0);
-  const [updatePic, setUpdatePic] = useState(0)
-
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected:', socket.id));
     socket.on('picture_taken', data => {
       setPictureStatus(data.message);
-      setPictureAvail(data.success)
       console.log('GOT PHOTO')
-      setUpdatePic(updatePic + 1)
 
       setTimeout(() => setPictureStatus(""), 3000); // Clear status after 3 seconds
     });
@@ -28,42 +22,48 @@ function App() {
     };
   }, []);
 
-  //measurements:
+  //UPDATING MEASUREMENTS:
+
   const [tempRes, settempRes] = useState("No measurements done yet!");
   const [humidRes, sethumidRes] = useState("No measurements done yet!");
   const [lightRes, setlightRes] = useState("No measurements done yet!");
   const [distRes, setdistRes] = useState("No measurements done yet!");
 
+    //geting values from backend:
   socket.on('temp', (latestTemp) => {
     settempRes(latestTemp);
     //console.log("got temp measurements" + latestTemp)
   })
+
   socket.on('humidity', (latestHumidity) => {
     sethumidRes(latestHumidity);
     //console.log("got Humidity measurements" + latestHumidity);
   })
+
   socket.on('light', (latestLight) => {
     setlightRes(latestLight);
     //console.log("got light measurements" + latestLight);
   })
+
   socket.on('ultrasonic', (latestUltrasonic) => {
     setdistRes(latestUltrasonic);
     //console.log("got distance measurements" + latestUltrasonic);
   })
 
-  //Take photo
+
+  //TAKING PHOTO:
+
   function Camera(prop) {
     let handleClick = () => {
       socket.emit('take_picture')
       console.log('taking photo')
-      prop.onCameraClick()
     }
     return (
       <div className="camera-section">
         <h2 className="Heading1">Camera:</h2>
         <button onClick={handleClick} className="Button">Take photo</button >
         <div className="media-container">
-          <img src={`/downloaded_image.jpg?${Math.floor(Date.now() / 500) }`} alt="No photo to display" className="camera-image" />
+          <img src={`/downloaded_image.jpg?${Math.floor(Date.now() / 500) }`} alt="No photo to display" className="camera-image" /> {/*added the time to the end so it would rerender every few secionts*/}
           <audio controls className="audio-player">
             <source src={`/image_to_speach.mp3?${Math.floor(Date.now() / 500) }`} type="audio/mpeg" />
             Your browser does not support the audio element.
@@ -74,11 +74,11 @@ function App() {
   }
 
 
-  //Text send---------------------
-  const [response, setResponse] = useState(null);
-  const [text, setText] = useState(null);
+  //SENDING MESSAGES TO AGENT:
 
-  const handleChange = e => setText(e.target.value);
+  const [text, setText] = useState(null);
+  const handleChange = e => setText(e.target.value); //change text value when something is typed into chatbox
+
   const handleSubmit = e => {
     console.log("Frontend sending message: " + text);
     e.preventDefault(); // prevent page from refreshing
@@ -99,8 +99,7 @@ function App() {
           <p className="Result"> Light value: {lightRes ? `${lightRes} lm` : "No measurements done yet!"} </p>
           <p className="Result"> Distance value: {distRes ? `${distRes} cm` : "No measurements done yet!"} </p>
         </div>
-        <Camera pictureAvail={pictureAvail} onCameraClick={() => setCameraKey(prev => prev + 1)}
-          key={cameraKey} />
+        <Camera/>
       </div>
       <div className="talk-to-agent-section">
         <h2 className="Heading1">Talk to agent</h2>
@@ -111,7 +110,7 @@ function App() {
             value={text}
             onChange={handleChange}
             className="text-input"
-            maxLength={32}
+            maxLength={32} //max number of digits that can be sent to agent at a time
             required
           />
           <button onClick={handleSubmit} className="Button send-button">Send</button>
