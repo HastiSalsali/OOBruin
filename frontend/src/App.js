@@ -94,10 +94,10 @@ function App() {
       <div className="main-container">
         <div className="measurements-section">
           <h2 className="Heading1">Measurements:</h2>
-          <p className="Result"> Temp value: {tempRes ? tempRes : "No measurements done yet!"} </p>
-          <p className="Result"> Humidity value: {humidRes ? humidRes : "No measurements done yet!"} </p>
-          <p className="Result"> Light value: {lightRes ? lightRes : "No measurements done yet!"} </p>
-          <p className="Result"> Distance value: {distRes ? distRes : "No measurements done yet!"} </p>
+          <p className="Result"> Temp value: {tempRes ? `${tempRes} °F` : "No measurements done yet!"} </p>
+          <p className="Result"> Humidity value: {humidRes ? `${humidRes} %` : "No measurements done yet!"} </p>
+          <p className="Result"> Light value: {lightRes ? `${lightRes} lm` : "No measurements done yet!"} </p>
+          <p className="Result"> Distance value: {distRes ? `${distRes} cm` : "No measurements done yet!"} </p>
         </div>
         <Camera pictureAvail={pictureAvail} onCameraClick={() => setCameraKey(prev => prev + 1)}
           key={cameraKey} />
@@ -111,7 +111,7 @@ function App() {
             value={text}
             onChange={handleChange}
             className="text-input"
-
+            maxLength={32}
             required
           />
           <button onClick={handleSubmit} className="Button send-button">Send</button>

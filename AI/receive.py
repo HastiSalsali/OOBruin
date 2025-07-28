@@ -12,9 +12,11 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(script_dir, "../frontend/public/downloaded_image.jpg")
 
 #url = "https://canto-wp-media.s3.amazonaws.com/app/uploads/2019/08/19194139/image-url.jpg" #(2)
-url = "https://www.movies4kids.co.uk/wp-content/uploads/sites/15/2019/04/spycat.jpg" #(2)
+#url = "https://www.movies4kids.co.uk/wp-content/uploads/sites/15/2019/04/spycat.jpg" #(2)
 #url = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg" #(2)
-#url = "http://192.168.50.72/1600x1200.jpg" #(1)
+#url = "http://192.168.0.113/1600x1200.jpg" #on bruin wifi
+#url = "http://192.168.50.96/1600x1200.jpg"
+url = "http://192.168.0.110/1600x1200.jpg"
 
 # Function to download the image from esp32, given to you
 def download_image():
@@ -49,6 +51,23 @@ file_id = create_file("../frontend/public/downloaded_image.jpg")
 
 
 #AI PHOTO ANALYSIS FOR FILE IN FRONTEND (1):
+response = client.responses.create(
+    model="gpt-4.1-mini",
+    input=[{
+        "role": "user",
+        "content": [
+            {"type": "input_text", "text": "Describe photo"},
+            {
+                "type": "input_image",
+                "file_id": file_id,
+            },
+        ],
+    }],
+)
+#___________________________________(1)
+
+
+#AI PHOTO ANALYSIS FOR PHOTO IN WEB (2):
 # response = client.responses.create(
 #     model="gpt-4.1-mini",
 #     input=[{
@@ -57,28 +76,11 @@ file_id = create_file("../frontend/public/downloaded_image.jpg")
 #             {"type": "input_text", "text": "what's in this image?"},
 #             {
 #                 "type": "input_image",
-#                 "file_id": file_id,
+#                 "image_url": url,
 #             },
 #         ],
 #     }],
 # )
-#___________________________________(1)
-
-
-#AI PHOTO ANALYSIS FOR PHOTO IN WEB (2):
-response = client.responses.create(
-    model="gpt-4.1-mini",
-    input=[{
-        "role": "user",
-        "content": [
-            {"type": "input_text", "text": "what's in this image?"},
-            {
-                "type": "input_image",
-                "image_url": url,
-            },
-        ],
-    }],
-)
 #___________________________________(2)
 
 
