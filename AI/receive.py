@@ -27,7 +27,7 @@ def download_image():
         print("Failed to download image. Status code:", response.status_code)
 
 
-#download_image()
+download_image()
 
 client = OpenAI(api_key = API_KEY)
 
@@ -45,7 +45,7 @@ def create_file(file_path):
 file_id = create_file("../frontend/public/downloaded_image.jpg")
 
 
-#AI PHOTO ANALYSIS FOR FILE IN FRONTEND:
+#AI PHOTO ANALYSIS FOR PICTURE:
 response = client.responses.create(
     model="gpt-4.1-mini",
     input=[{
@@ -74,3 +74,4 @@ with client.audio.speech.with_streaming_response.create(
     instructions= instruction
 ) as response:
     response.stream_to_file(speech_file_path)
+
