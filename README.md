@@ -1,4 +1,6 @@
 # Team name: OOBruin
+<img width="173" height="172" alt="00Bruin_Logo" src="https://github.com/user-attachments/assets/4280cc40-f049-4b5e-b73d-0eea09ab1e06" />
+
 Team members: **[Edwin Lin](https://www.linkedin.com/in/edwlin7279/)**, **[Tyler Newton](https://www.linkedin.com/in/newton-tyler/)**, **[Hasti Salsali](www.linkedin.com/in/hastisalsali)**, **[Alex Lopez](https://www.linkedin.com/in/alexlopez1159/)**
 
 -> This repository contains the code, circuit diagram, and CAD files for our project, created for **UCLA 2025 HAcK**. Our spy gadgets includes a watch and a bowtie, designed to communicate to and be controlled by our website.
@@ -6,7 +8,7 @@ Team members: **[Edwin Lin](https://www.linkedin.com/in/edwlin7279/)**, **[Tyler
 ### Electronics and Schematics:
 [Circuit diagram](https://github.com/HastiSalsali/OOBruin/blob/master/Electronics_and_Schematics%3A/Circuit_Diagram.jpg)
 
-### Meachanical Components:
+### Mechanical Components:
 [CAD files](https://github.com/HastiSalsali/OOBruin/tree/master/Mechanical_Components%3A)
 
 ### Presentation:
