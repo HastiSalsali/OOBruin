@@ -1,5 +1,5 @@
 # Team name: OOBruin
-Team members: *Edwin Lin*, *Tyler Newton*, *Hasti Salsali*, *Alex Lopez*
+Team members: **[Edwin Lin](https://www.linkedin.com/in/edwlin7279/)**, **[Tyler Newton](https://www.linkedin.com/in/newton-tyler/)**, **[Hasti Salsali](www.linkedin.com/in/hastisalsali)**, **[Alex Lopez](https://www.linkedin.com/in/alexlopez1159/)**
 
 -> This repository contains the code, circuit diagram, and CAD files for our project, created for **UCLA 2025 HAcK**. Our spy gadgets includes a watch and a bowtie, designed to communicate to and be controlled by our website.
 
@@ -16,8 +16,12 @@ Team members: *Edwin Lin*, *Tyler Newton*, *Hasti Salsali*, *Alex Lopez*
 
 [Video Presentation](https://youtu.be/FFLzoeuouuA)
 
+### Our Gadgets:
+<img width="308" height="412" alt="00Bruin Agent" src="https://github.com/user-attachments/assets/b0b73ab2-cbcf-4caf-ad66-36ee8f8a5d82" />
+<img width="306" height="411" alt="00Bruin Bowtie" src="https://github.com/user-attachments/assets/8317234a-a462-4a76-a629-db986fc865df" />
+<img width="306" height="411" alt="00Bruin Bowtie" src="https://github.com/user-attachments/assets/618f893e-669a-4140-b2d4-d2991203e54d" />
 
-## To run code:
+## How to run code:
 
 ### AI Setup:
 -add a my_secrets.py file in the OOBruin/AI folder, containing your OpenAI "`API_KEY`".
