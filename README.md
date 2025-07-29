@@ -14,7 +14,7 @@ Team members: *Edwin Lin*, *Tyler Newton*, *Hasti Salsali*, *Alex Lopez*
 
 [Google Slides](https://docs.google.com/presentation/d/19XGPjU8Jk1XB0TQxRVJp7M6kx2x2rjpt80H7BGjiUeA/edit?usp=sharing)
 
-[Video Presentation]()
+[Video Presentation](https://youtu.be/FFLzoeuouuA)
 
 
 ## To run code:
