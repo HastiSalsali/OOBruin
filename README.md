@@ -1,7 +1,6 @@
-# Cloning the project 
+# Circuit Diagram:
+[Link to circuit diagram](https://drive.google.com/file/d/10QwgVS3xziQsNO_BHqdusI0C0zyzDuw0/view?usp=sharing)
 
-- Clone the repository by running 'git clone (url)'
-- Once you're in the directory you just cloned, run the following code to remove the existing .git file:
 
 Windows:
 Remove-Item -Recurse -Force .git
