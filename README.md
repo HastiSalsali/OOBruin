@@ -1,19 +1,27 @@
 # Team name: OOBruin
-Team members: *Edwin Lin*, *Tyler Newton*, *Hasti Salsali*, *Alex Lopez*
--> This repo holds the code, circuit diagram, and CAD for our project for the **UCLA HAcK Hackathon 2025**. Our spy gadgets included a watch and a bowtie, which both communicated and were controlled with our website.  
+Team members: **[Edwin Lin](https://www.linkedin.com/in/edwlin7279/)**, **[Tyler Newton](https://www.linkedin.com/in/newton-tyler/)**, **[Hasti Salsali](www.linkedin.com/in/hastisalsali)**, **[Alex Lopez](https://www.linkedin.com/in/alexlopez1159/)**
 
-### [Circuit diagram](https://drive.google.com/file/d/10QwgVS3xziQsNO_BHqdusI0C0zyzDuw0/view?usp=sharing)
+-> This repository contains the code, circuit diagram, and CAD files for our project, created for **UCLA 2025 HAcK**. Our spy gadgets includes a watch and a bowtie, designed to communicate to and be controlled by our website.
 
-### [CAD files]()
+### Electronics and Schematics:
+[Circuit diagram](https://github.com/HastiSalsali/OOBruin/blob/master/Electronics_and_Schematics%3A/Circuit_Diagram.jpg)
 
-### [Slides]()
+### Meachanical Components:
+[CAD files](https://github.com/HastiSalsali/OOBruin/tree/master/Mechanical_Components%3A)
 
-### [Video Presentation]()
+### Presentation:
+[Slides (pdf)](https://github.com/HastiSalsali/OOBruin/blob/master/Presentation/00Bruin%20Design%20Review%20Presentation.pdf)
 
-## Our Gadgets:
-![alt text](image.jpg)
+[Slides (Google Slides)](https://docs.google.com/presentation/d/19XGPjU8Jk1XB0TQxRVJp7M6kx2x2rjpt80H7BGjiUeA/edit?usp=sharing)
 
-## To run code:
+[Video Presentation (Youtube)](https://youtu.be/FFLzoeuouuA)
+
+### Our Gadgets:
+<img width="308" height="412" alt="00Bruin Agent" src="https://github.com/user-attachments/assets/b0b73ab2-cbcf-4caf-ad66-36ee8f8a5d82" />
+<img width="306" height="411" alt="00Bruin Bowtie" src="https://github.com/user-attachments/assets/8317234a-a462-4a76-a629-db986fc865df" />
+<img width="306" height="411" alt="00Bruin Bowtie" src="https://github.com/user-attachments/assets/618f893e-669a-4140-b2d4-d2991203e54d" />
+
+## How to run code:
 
 ### AI Setup:
 -add a my_secrets.py file in the OOBruin/AI folder, containing your OpenAI "`API_KEY`".
