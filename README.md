@@ -10,11 +10,11 @@ Team members: **[Edwin Lin](https://www.linkedin.com/in/edwlin7279/)**, **[Tyler
 [CAD files](https://github.com/HastiSalsali/OOBruin/tree/master/Mechanical_Components%3A)
 
 ### Presentation:
-[Pdf of Slides](https://github.com/HastiSalsali/OOBruin/blob/master/Presentation/00Bruin%20Design%20Review%20Presentation.pdf)
+[Slides (pdf)](https://github.com/HastiSalsali/OOBruin/blob/master/Presentation/00Bruin%20Design%20Review%20Presentation.pdf)
 
-[Google Slides](https://docs.google.com/presentation/d/19XGPjU8Jk1XB0TQxRVJp7M6kx2x2rjpt80H7BGjiUeA/edit?usp=sharing)
+[Slides (Google Slides)](https://docs.google.com/presentation/d/19XGPjU8Jk1XB0TQxRVJp7M6kx2x2rjpt80H7BGjiUeA/edit?usp=sharing)
 
-[Video Presentation](https://youtu.be/FFLzoeuouuA)
+[Video Presentation (Youtube)](https://youtu.be/FFLzoeuouuA)
 
 ### Our Gadgets:
 <img width="308" height="412" alt="00Bruin Agent" src="https://github.com/user-attachments/assets/b0b73ab2-cbcf-4caf-ad66-36ee8f8a5d82" />
