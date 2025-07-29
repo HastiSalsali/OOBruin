@@ -99,10 +99,12 @@ let latestUltrasonic = null;
 let latestHumidity = null;
 let latestLight = null;
 
+// Client connects to the server via WebSocket
 io.on("connection", (socket) => {
+  // Listen for "display" events sent from the frontend
   socket.on("display", (message) => {
-    console.log('Message Received from Operator:', message);
-    client.publish("display", message.toString());
+    console.log('Message Received from Operator:', message); // Log the incoming message
+    client.publish("display", message.toString()); // Publish the message to the "display" MQTT topic
   });
 
   // Handle take picture request
@@ -130,6 +132,10 @@ io.on("connection", (socket) => {
         socket.emit('picture_taken', { success: false, message: 'Failed to analyze picture' });
       }
     });
+  // Listen for "clock-setting" events sent from the frontend
+  socket.on("clock-setting", (value) => {
+    console.log("Clock setting received from frontend:", value); // Log the received clock setting
+    client.publish("clock-setting", value.toString()); // Publish the clock value to the "clock-setting" MQTT topic
   });
 });
 
