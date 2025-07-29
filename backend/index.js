@@ -99,12 +99,22 @@ let latestUltrasonic = null;
 let latestHumidity = null;
 let latestLight = null;
 
-// Client connects to the server via WebSocket
 io.on("connection", (socket) => {
-  // Listen for "display" events sent from the frontend
-  socket.on("display", (message) => {
-    console.log('Message Received from Operator:', message); // Log the incoming message
-    client.publish("display", message.toString()); // Publish the message to the "display" MQTT topic
+  console.log("Frontend connected to socket");
+
+  // Send the latest sensor data to the newly connected client
+  if (latestTemp) {
+    socket.emit('temp', latestTemp);
+  }
+  if (latestUltrasonic) socket.emit('ultrasonic', latestUltrasonic);
+  if (latestLight) {
+    socket.emit('light', latestLight);
+  }
+
+  // Listen for messages from the frontend
+  socket.on('display', (message) => {
+    console.log('Received message from frontend:', message);
+    client.publish("display", message.toString());
   });
 
   // Handle take picture request
@@ -132,63 +142,13 @@ io.on("connection", (socket) => {
         socket.emit('picture_taken', { success: false, message: 'Failed to analyze picture' });
       }
     });
-  // Listen for "clock-setting" events sent from the frontend
-  socket.on("clock-setting", (value) => {
-    console.log("Clock setting received from frontend:", value); // Log the received clock setting
-    client.publish("clock-setting", value.toString()); // Publish the clock value to the "clock-setting" MQTT topic
-  });
-});
-
-console.log("Frontend connected to socket");
-
-// Send the latest sensor data to the newly connected client
-if (latestTemp) {
-  socket.emit('temp', latestTemp);
-}
-if (latestUltrasonic) {
-  socket.emit('ultrasonic', latestUltrasonic);
-}
-if (latestLight) {
-  socket.emit('light', latestLight);
-}
-
-// Listen for messages from the frontend
-socket.on('display', (message) => {
-  console.log('Received message from frontend:', message);
-  client.publish("display", message.toString());
-});
-
-  // Handle take picture request
-  socket.on('take_picture', () => {
-    console.log('📸 Taking picture and getting AI description...');
-    
-    // Execute the Python script
-    const pythonProcess = spawn('python3', ['../AI/receive.py'], {
-      cwd: __dirname
-    });
-
-  pythonProcess.stdout.on('data', (data) => {
-    console.log(`Python output: ${data}`);
   });
 
-  pythonProcess.stderr.on('data', (data) => {
-    console.error(`Python error: ${data}`);
+  socket.on("disconnect", () => {
+    console.log("Frontend disconnected from socket");
   });
 
-  pythonProcess.on('close', (code) => {
-    console.log(`Python script finished with code ${code}`);
-    if (code === 0) {
-      socket.emit('picture_taken', { success: true, message: 'Picture analyzed successfully!' });
-    } else {
-      socket.emit('picture_taken', { success: false, message: 'Failed to analyze picture' });
-    }
-  });
 });
-
-socket.on("disconnect", () => {
-  console.log("Frontend disconnected from socket");
-});
-
 
 setInterval(() => {
   io.emit('temp', latestTemp);
@@ -203,17 +163,16 @@ server.listen(8000, () => {
 
 client.on('message', (TOPIC, payload) => {
   console.log("Received from broker:", TOPIC, payload.toString());
-  if (TOPIC === 'temp') {
+  if( TOPIC === 'temp' ) {
     latestTemp = payload.toString();
   }
-  else if (TOPIC === 'ultrasonic') {
+  else if ( TOPIC === 'ultrasonic' ) {
     latestUltrasonic = payload.toString();
   }
-  else if (TOPIC === 'humidity') {
+  else if ( TOPIC === 'humidity') {
     latestHumidity = payload.toString();
   }
-  else if (TOPIC === 'light') {
+  else if ( TOPIC === 'light') {
     latestLight = payload.toString();
   }
 });
-
