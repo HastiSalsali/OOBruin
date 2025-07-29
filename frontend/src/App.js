@@ -7,6 +7,9 @@ const socket = io('http://localhost:8000');
 
 function App() {
   const [pictureStatus, setPictureStatus] = useState("");
+  const [pictureAvail, setPictureAvail] = useState(false)
+  const [cameraKey, setCameraKey] = useState(0);
+
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected:', socket.id));
@@ -34,17 +37,14 @@ function App() {
     settempRes(latestTemp);
     //console.log("got temp measurements" + latestTemp)
   })
-
   socket.on('humidity', (latestHumidity) => {
     sethumidRes(latestHumidity);
     //console.log("got Humidity measurements" + latestHumidity);
   })
-
   socket.on('light', (latestLight) => {
     setlightRes(latestLight);
     //console.log("got light measurements" + latestLight);
   })
-
   socket.on('ultrasonic', (latestUltrasonic) => {
     setdistRes(latestUltrasonic);
     //console.log("got distance measurements" + latestUltrasonic);
@@ -117,6 +117,7 @@ function App() {
         </div>
       </div>
     </div>
+
   );
 }
 

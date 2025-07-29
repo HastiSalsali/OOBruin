@@ -27,7 +27,7 @@ def download_image():
         print("Failed to download image. Status code:", response.status_code)
 
 
-download_image()
+#download_image()
 
 client = OpenAI(api_key = API_KEY)
 
