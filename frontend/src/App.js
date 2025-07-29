@@ -13,13 +13,15 @@ function App() {
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected:', socket.id));
+
     socket.on('picture_taken', data => {
       setPictureStatus(data.message);
       console.log('GOT PHOTO')
-
       setTimeout(() => setPictureStatus(""), 3000); // Clear status after 3 seconds
     });
-    console.log('STARTED PROGRAM at' , Date.now() )
+
+    console.log('STARTED PROGRAM at', Date.now()) //To check when page reloads
+
     return () => {
       socket.off('picture_taken');
     };
@@ -32,40 +34,43 @@ function App() {
   const [lightRes, setlightRes] = useState("No measurements done yet!");
   const [distRes, setdistRes] = useState("No measurements done yet!");
 
-    //geting values from backend:
+  //geting values from backend:
+
   socket.on('temp', (latestTemp) => {
-    settempRes(latestTemp);
-    //console.log("got temp measurements" + latestTemp)
+    settempRes(latestTemp); //changing usestate variable so value rerenders in website
+    console.log("got temp measurements" + latestTemp)
   })
   socket.on('humidity', (latestHumidity) => {
-    sethumidRes(latestHumidity);
-    //console.log("got Humidity measurements" + latestHumidity);
+    sethumidRes(latestHumidity); //changing usestate variable so value rerenders in website
+    console.log("got Humidity measurements" + latestHumidity);
   })
   socket.on('light', (latestLight) => {
-    setlightRes(latestLight);
-    //console.log("got light measurements" + latestLight);
+    setlightRes(latestLight); //changing usestate variable so value rerenders in website
+    console.log("got light measurements" + latestLight);
   })
   socket.on('ultrasonic', (latestUltrasonic) => {
-    setdistRes(latestUltrasonic);
-    //console.log("got distance measurements" + latestUltrasonic);
+    setdistRes(latestUltrasonic); //changing usestate variable so value rerenders in website
+    console.log("got distance measurements" + latestUltrasonic);
   })
 
 
   //TAKING PHOTO:
 
-  function Camera(prop) {
+  function Camera(prop) {  //camera component holding the captured photo, button to take photo and audio description
+
     let handleClick = () => {
-      socket.emit('take_picture')
+      socket.emit('take_picture') //when "Take photo" button is click send message to backend to take photo
       console.log('taking photo')
     }
+
     return (
       <div className="camera-section">
         <h2 className="Heading1">Camera:</h2>
-        <button onClick={handleClick} className="Button">Take photo</button >
+        <button onClick={handleClick} className="Button">Take photo</button >  {/*take photo button*/}
         <div className="media-container">
-          <img src={`/downloaded_image.jpg?${Math.floor(Date.now() / 500) }`} alt="No photo to display" className="camera-image" /> {/*added the time to the end so it would rerender every few secionts*/}
+          <img src={`/downloaded_image.jpg?${Math.floor(Date.now() / 500)}`} alt="No photo to display" className="camera-image" /> {/*added the time as a query string so website rerenders image every few seconds*/}
           <audio controls className="audio-player">
-            <source src={`/image_to_speach.mp3?${Math.floor(Date.now() / 500) }`} type="audio/mpeg" />
+            <source src={`/image_to_speach.mp3?${Math.floor(Date.now() / 500)}`} type="audio/mpeg" /> {/*added the time as a query string so website rerenders audio every few seconds*/}
             Your browser does not support the audio element.
           </audio>
         </div>
@@ -99,7 +104,7 @@ function App() {
           <p className="Result"> Light value: {lightRes ? `${lightRes} lm` : "No measurements done yet!"} </p>
           <p className="Result"> Distance value: {distRes ? `${distRes} cm` : "No measurements done yet!"} </p>
         </div>
-        <Camera/>
+        <Camera />
       </div>
       <div className="talk-to-agent-section">
         <h2 className="Heading1">Talk to agent</h2>
@@ -108,7 +113,7 @@ function App() {
             type="text"
             placeholder="Enter your message..."
             value={text}
-            onChange={handleChange}
+            onChange={handleChange} 
             className="text-input"
             maxLength={32} //max number of digits that can be sent to agent at a time
             required
