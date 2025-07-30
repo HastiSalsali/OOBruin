@@ -111,10 +111,16 @@ io.on("connection", (socket) => {
     socket.emit('light', latestLight);
   }
 
-  // Listen for messages from the frontend
-  socket.on('display', (message) => {
-    console.log('Received message from frontend:', message);
-    client.publish("display", message.toString());
+  // Listen for "display" events sent from the frontend
+  socket.on("display", (message) => {
+    console.log('Message Received from Operator:', message); // Log the incoming message
+    client.publish("display", message.toString()); // Publish the message to the "display" MQTT topic
+  });
+
+  // Listen for "clock-setting" events sent from the frontend
+  socket.on("clock-setting", (value) => {
+    console.log("Clock setting received from frontend:", value); // Log the received clock setting
+    client.publish("clock-setting", value.toString()); // Publish the clock value to the "clock-setting" MQTT topic
   });
 
   // Handle take picture request
